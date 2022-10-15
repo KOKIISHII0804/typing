@@ -1,7 +1,12 @@
 let untyped = "";
 let typed = "";
-const untypedField = document.getElementById("untyped");
-const typedFieled = document.getElementById("typed");
+let score = 0;
+
+const untypedfield = document.getElementById("untyped");
+const typedfieled = document.getElementById("typed");
+const wrap = document.getElementById("wrap");
+const start = document.getElementById("start");
+const wordCountLabel = document.getElementById("counter");
 const textLists = [
   "Hello World",
   "This is my App",
@@ -39,32 +44,75 @@ const textLists = [
 ];
 
 const createText = () => {
+  typed = "";
+  typedfieled.textContent = typed;
   let random = Math.floor(Math.random() * textLists.length);
   untyped = textLists[random];
-  untypedField.textContent = untyped;
-  typed = "";
-  typedFieled.textContent = typed;
+  untypedfield.textContent = untyped;
 };
-createText();
 
 // キー入力の判定?
 const keyPress = (e) => {
+  if (e.key !== untyped.substring(0, 1)) {
+    wrap.classList.add("mistyped");
+    setTimeout(() => {
+      wrap.classList.remove("mistyped");
+    }, 100);
+
+    return;
+  }
+
+  score++;
+  // スコアを表示させる
+  wordCountLabel.textContent = score;
   typed += untyped.substring(0, 1);
   untyped = untyped.substring(1);
-  typedFieled.textContent = typed;
-  untypedField.textContent = untyped;
+  typedfieled.textContent = typed;
+  untypedfield.textContent = untyped;
+
   if (untyped === "") {
     createText();
   }
 };
 
 // タイピングスキルのランクを判定
-const rankCheck = (score) => {};
+const rankCheck = (score) => {
+  let text = "";
+  if (score < 10) {
+    text = "rank C Bまであと${10-score}";
+  } else if (score < 20) {
+    text = "rank B Aまであと${10-score}";
+  } else if (score >= 30) {
+    text = "rank A ";
+  }
+  return `${score}文字打てました`;
+};
+// スコアがh増えるとるとカウンターの色が変わる
+const scoreColor = (score) => {};
 
 // ゲームを終了
-const gameOver = (id) => {};
+const gameOver = (id) => {
+  clearInterval(id);
+  const reult = confirm(rankCheck(score));
+};
+//
 
 // カウントダウンタイマー
-const timer = () => {};
+const timer = () => {
+  let time = count.textContent;
+  const id = setInterval(() => {
+    time--;
+    count.textContent = time;
+    if (time <= 0) {
+      gameOver(id);
+    }
+  }, 1000);
+};
 
-document.addEventListener(keyPress, keyPress);
+start.addEventListener("click", () => {
+  timer();
+  createText();
+  start.style.display = "none";
+  document.addEventListener("keypress", keyPress);
+});
+untypedfield.textContent = "スタートボタンで開始";

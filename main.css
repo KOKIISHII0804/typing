@@ -3,14 +3,14 @@ body {
   text-align: center;
 }
 
-/* ゲームの残り秒数が表示されるタイマーの領域 */
-#count {
+.count {
   margin: 0;
   font-weight: bold;
   color: #888;
 }
-
-/* テキストが表示される領域 */
+#counter {
+  font-size: 20px;
+}
 .wrap {
   margin-top: 20px;
   padding: 80px 40px;
@@ -19,12 +19,10 @@ body {
   color: #fff;
 }
 
-/* 正しくタイプされた場合のテキスト */
 .typed {
   color: lightgreen;
 }
 
-/* ミスタイプの場合の背景 */
 .mistyped {
   background-color: red;
 }
