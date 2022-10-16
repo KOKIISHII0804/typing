@@ -63,6 +63,7 @@ const keyPress = (e) => {
   }
 
   score++;
+  scoreColor(score);
   // スコアを表示させる
   wordCountLabel.textContent = score;
   typed += untyped.substring(0, 1);
@@ -79,21 +80,27 @@ const keyPress = (e) => {
 const rankCheck = (score) => {
   let text = "";
   if (score < 10) {
-    text = "rank C Bまであと${10-score}";
+    text = `rank C Bまであと${20 - score}文字です`;
   } else if (score < 20) {
-    text = "rank B Aまであと${10-score}";
+    text = `rank B Aまであと${30 - score}文字です`;
   } else if (score >= 30) {
     text = "rank A ";
   }
-  return `${score}文字打てました`;
+  return `${text}\n${score}文字打てました`;
 };
-// スコアがh増えるとるとカウンターの色が変わる
-const scoreColor = (score) => {};
+// スコアが増えるとるとカウンターの色が変わる
+const scoreColor = (score) => {
+  if (score < 10) {
+    wordCountLabel.style.color = "yellow";
+  } else if (score < 20) {
+    wordCountLabel.style.color = "blue";
+  }
+};
 
 // ゲームを終了
 const gameOver = (id) => {
   clearInterval(id);
-  const reult = confirm(rankCheck(score));
+  confirm(rankCheck(score));
 };
 //
 
